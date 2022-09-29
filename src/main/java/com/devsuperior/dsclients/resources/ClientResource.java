@@ -32,14 +32,15 @@ public class ClientResource {
     @GetMapping(value = "/{id}")
     public ResponseEntity<ClientDto> findById(@PathVariable(value = "id") Long id) {
         var dto = clientService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
+    }
+
+    @PostMapping
+    public ResponseEntity<ClientDto> insert(@RequestBody ClientDto clientDto) {
+        var dto = clientService.insert(clientDto);
         var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
-
-//    @PostMapping
-//    public ResponseEntity<ClientDto> insert(@RequestBody ClientDto clientDto) {
-//
-//    }
 //
 //    @PutMapping(value = "/{id}")
 //    public ResponseEntity<ClientDto> update(@PathVariable(value = "id") Long id, @RequestBody ClientDto clientDto) {

@@ -1,8 +1,10 @@
 package com.devsuperior.dsclients.services;
 
 import com.devsuperior.dsclients.dtos.ClientDto;
+import com.devsuperior.dsclients.entities.Client;
 import com.devsuperior.dsclients.repositories.ClientRepository;
 import com.devsuperior.dsclients.services.exceptions.ResourceNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,5 +25,11 @@ public class ClientService {
         var obj = clientRepository.findById(id);
         var entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
         return new ClientDto(entity);
+    }
+
+    public ClientDto insert(ClientDto clientDto) {
+        var client = new Client();
+        BeanUtils.copyProperties(clientDto, client);
+        return new ClientDto(clientRepository.save(client));
     }
 }
