@@ -41,11 +41,12 @@ public class ClientResource {
         var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
-//
-//    @PutMapping(value = "/{id}")
-//    public ResponseEntity<ClientDto> update(@PathVariable(value = "id") Long id, @RequestBody ClientDto clientDto) {
-//
-//    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ClientDto> update(@PathVariable(value = "id") Long id, @RequestBody ClientDto clientDto) {
+        var dto = clientService.update(id, clientDto);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
+    }
 //
 //    @DeleteMapping(value = "/{id}")
 //    public ResponseEntity<Void> delete(@PathVariable(value = "id") Long id) {
